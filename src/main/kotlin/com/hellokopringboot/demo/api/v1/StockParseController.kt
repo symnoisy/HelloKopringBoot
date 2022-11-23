@@ -1,7 +1,9 @@
 package com.hellokopringboot.demo.api.v1
 
-import com.fasterxml.jackson.module.kotlin.jsonMapper
-import io.swagger.v3.core.util.Json
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import com.hellokopringboot.demo.dto.ChartDto
+import com.hellokopringboot.demo.dto.ResultDto
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -23,15 +25,20 @@ class StockParseController {
         @RequestParam("ticker", defaultValue = "005930.KS") ticker: String,
         @RequestParam("interval", defaultValue = "1d") interval: String,
         @RequestParam("range", defaultValue = "5d") range: String,
-    ): String? {
+    ): String {
         // YahooFinance Documentation: https://syncwith.com/yahoo-finance/yahoo-finance-api
 
         val client = HttpClient.newBuilder().build()
         val yahooFinanceURI = "https://query1.finance.yahoo.com/v8/finance/chart/$ticker?interval=$interval&range=$range"
         val request = HttpRequest.newBuilder().uri(URI.create(yahooFinanceURI)).build()
-        val responseBody = client.send(request, HttpResponse.BodyHandlers.ofString()).body()
+        val responseBodyString = client.send(request, HttpResponse.BodyHandlers.ofString()).body()
 
-        return responseBody
+        val mapper = ObjectMapper()
+//        val a = mapper.readValue(responseBodyString, ChartDto::class.java)
+        val data: ChartDto = mapper.readValue(responseBodyString)
+
+//        return responseBodyString
+        return "1"
     }
 
 }
