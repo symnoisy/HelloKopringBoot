@@ -65,10 +65,10 @@ data class YahooFinanceDto(
                 val adjclose: List<Adjclose?>?
             ) {
                 data class Quote(
-                    val volume: List<Int?>?,
                     val low: List<Double?>?,
-                    val `open`: List<Double?>?,
                     val close: List<Double?>?,
+                    val volume: List<Double?>?,
+                    val `open`: List<Double?>?,
                     val high: List<Double?>?
                 )
 
