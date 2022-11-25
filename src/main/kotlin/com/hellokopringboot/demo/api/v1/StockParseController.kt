@@ -32,6 +32,8 @@ class StockParseController (
         val timestamp = response.chart?.result?.get(0)?.timestamp
         val quote = response.chart?.result?.get(0)?.indicators?.quote
 
+//        YahooFinanceModel().
+
         return ResponseDataDto(timestamp = timestamp, indicators = ResponseDataDto.Indicators(quote))
     }
 
